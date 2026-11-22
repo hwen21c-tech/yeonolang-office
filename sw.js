@@ -2,7 +2,7 @@
    · 셸(index·manifest·아이콘)은 캐시해 오프라인에서도 뜨게 한다.
    · 시세 API(다른 도메인)는 건드리지 않고, 브리핑 JSON 은 네트워크 우선.
 */
-const VERSION = 'yeonolang-office-v2';
+const VERSION = 'yeonolang-office-v3';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './data/latest-briefing.json'];
 
 self.addEventListener('install', (e) => {
