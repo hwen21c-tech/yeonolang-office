@@ -701,7 +701,7 @@ body.focus #vignette{opacity:1}
   <button class="dock-btn" data-act="panel" id="dockPanel"><span class="ic">⏱</span><span>기록</span></button>
   <button class="dock-btn" id="dockQuiz" title="증시 미니 퀴즈"><span class="ic">🎲</span><span>퀴즈</span></button>
   <button class="dock-btn" id="dockShop" title="코인 상점"><span class="ic">🛒</span><span>상점</span></button>
-  <a class="dock-btn" href="index.html" id="dockHome" title="관제탑으로"><span class="ic">🏛</span><span>관제탑</span></a>
+  <a class="dock-btn" href="https://stock-dashboard-live-6frm.vercel.app/" target="_blank" rel="noopener" id="dockHome" title="관제탑(새 창)"><span class="ic">🏛</span><span>관제탑</span></a>
 </nav>
 
 <div id="hint">바닥을 눌러 이동 · 의자를 눌러 앉기 · 드래그로 시점 회전</div>
@@ -2897,7 +2897,7 @@ function bindUI() {
   window.addEventListener('resize', onResize);
   window.addEventListener('orientationchange', function () { setTimeout(onResize, 250); });
   $('#dockHome').addEventListener('click', function () {
-    toast('🏛 관제탑으로 이동합니다');
+    toast('🏛 관제탑을 새 창으로 엽니다');
   });
 }
 
