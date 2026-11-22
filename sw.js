@@ -1,9 +1,11 @@
 /* 연오랑 3D 사무실 — 독립 PWA 서비스 워커
-   · 셸(index·manifest·아이콘)은 캐시해 오프라인에서도 뜨게 한다.
+   · 셸(manifest·아이콘)은 캐시해 오프라인에서도 뜨게 한다.
+   · index.html · './' 문서는 **네트워크 우선** — 새 버전을 배포하면 새로고침 없이 바로 최신 화면.
    · 시세 API(다른 도메인)는 건드리지 않고, 브리핑 JSON 은 네트워크 우선.
 */
-const VERSION = 'yeonolang-office-v3';
+const VERSION = 'yeonolang-office-v4';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './data/latest-briefing.json'];
+const NO_STORE = { cache: 'no-store' };
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
@@ -29,16 +31,20 @@ self.addEventListener('fetch', (e) => {
   if (url.origin !== self.location.origin) return;      // 관제탑 API 등 외부 호출은 그대로 통과
   if (/\/api\//.test(url.pathname)) return;
 
-  // 화면 이동: 네트워크 우선 → 실패하면 캐시된 셸
-  if (req.mode === 'navigate') {
+  // 문서(화면 이동 · './' · '/index.html')는 항상 네트워크 우선.
+  // 브라우저 HTTP 캐시까지 건너뛰고 받아 오고, 실패했을 때만 캐시로 폴백한다.
+  const isDoc = req.mode === 'navigate' || url.pathname === '/' || /\/index\.html$/.test(url.pathname);
+  if (isDoc) {
     e.respondWith(
-      fetch(req)
+      fetch(req, NO_STORE)
         .then((res) => {
           const copy = res.clone();
           caches.open(VERSION).then((c) => c.put(req, copy)).catch(() => {});
           return res;
         })
-        .catch(() => caches.match('./index.html').then((r) => r || caches.match('./')))
+        .catch(() =>
+          caches.match(req).then((hit) => hit || caches.match('./index.html').then((r) => r || caches.match('./')))
+        )
     );
     return;
   }
