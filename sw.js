@@ -1,10 +1,10 @@
 /* 연오랑 3D 사무실 — 독립 PWA 서비스 워커
-   · v5 — AI 직원 5명(도크·카드) 배포에 맞춰 셸 캐시를 갱신한다.
+   · v6 — AI 직원 7명(뉴스·이차전지 리서치 추가) 배포에 맞춰 셸 캐시를 갱신한다.
    · 셸(manifest·아이콘)은 캐시해 오프라인에서도 뜨게 한다.
    · index.html · './' 문서는 **네트워크 우선** — 새 버전을 배포하면 새로고침 없이 바로 최신 화면.
    · 시세 API(다른 도메인)는 건드리지 않고, 브리핑 JSON 은 네트워크 우선.
 */
-const VERSION = 'yeonolang-office-v5';
+const VERSION = 'yeonolang-office-v6';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './data/latest-briefing.json'];
 const NO_STORE = { cache: 'no-store' };
 
